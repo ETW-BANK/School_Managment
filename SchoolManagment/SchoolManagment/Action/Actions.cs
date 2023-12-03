@@ -33,14 +33,14 @@ namespace SchoolManagment.Action
 
                 if (reader.HasRows)
                 {
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t\t{4}", "Student ID",  "First Name",   "Last Name",       "Gender",    "Age");
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "==========", "============", "===========", "=============",  "==============");
+                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "Student ID",  "First Name",   "Last Name",   "Gender",    "Age");
+                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "==========", "============", "===========","==========", "====");
 
 
                     while (reader.Read())
                     {
                         
-                        Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t\t{4}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
+                        Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
                     }
                 }
                 else
@@ -51,6 +51,7 @@ namespace SchoolManagment.Action
             }
         }
         public static void AddStudent( SqlConnection conn)
+
         {
             {
                 using (SqlCommand cmd =new SqlCommand())
@@ -59,8 +60,8 @@ namespace SchoolManagment.Action
 
                     // Insert data into the Students table
                 Console.WriteLine("\n\t\t\tInserting data into the Students table.");
-                    Console.WriteLine("\t\t\t=========================================\n\n");
-                    Console.WriteLine("Enter First Name");
+                Console.WriteLine("\t\t\t=========================================\n\n");
+                Console.WriteLine("Enter First Name");
                 string Fname = Console.ReadLine().ToUpper();
                 Console.WriteLine("Enter Last Name");
                 string Lname = Console.ReadLine().ToUpper();
@@ -70,6 +71,8 @@ namespace SchoolManagment.Action
                 string course = Console.ReadLine().ToUpper();
                 Console.WriteLine("Enter Age");
                 int age = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter Class Name");
+               string clasname = Console.ReadLine().ToUpper();
 
                cmd.CommandType = CommandType.Text;
                cmd.Connection = conn;   
@@ -82,18 +85,23 @@ namespace SchoolManagment.Action
 
                 cmd.CommandText = "insert into Course(CourseTitel)OUTPUT INSERTED.Course_ID values(@course)";
                 cmd.Parameters.AddWithValue("@course", course);
-                    
+
+               cmd.CommandText = "insert into Class(ClassName)OUTPUT INSERTED.Class_ID values(@classname)";
+               cmd.Parameters.AddWithValue("@classname", clasname);
+
                 int studentId = Convert.ToInt32(cmd.ExecuteScalar());
                 int courseId = Convert.ToInt32(cmd.ExecuteScalar());
+                int classId=Convert.ToInt32(cmd.ExecuteScalar());
 
 
 
-                cmd.CommandText = "insert into Relation(StudentID,CourseID) values(@studentId,@courseId)";
+                cmd.CommandText = "insert into Relation(StudentID,CourseID,ClassID) values(@studentId,@courseId,@classId)";
                 cmd.Parameters.Clear(); // Clear previous parameters
                 cmd.Parameters.AddWithValue("@studentId", studentId);
                 cmd.Parameters.AddWithValue("@courseId", courseId);
+                cmd.Parameters.AddWithValue("@classId", classId);
 
-               int rowsAffected = cmd.ExecuteNonQuery();
+                int rowsAffected = cmd.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
@@ -103,11 +111,12 @@ namespace SchoolManagment.Action
                 {
                     Console.WriteLine("\t\t\tFailed to insert data into the Students table.");
                 }
+                    Thread.Sleep(1000);
+                    Console.Clear();
             }
         }
 
         }
-
         public static void AddPersonel(SqlConnection conn)
         {
 
@@ -156,7 +165,6 @@ namespace SchoolManagment.Action
 
             }
         }
-
         public static void GetStudentsInClass()
         {
 
@@ -165,7 +173,6 @@ namespace SchoolManagment.Action
         {
 
         }
-
         public static void GetGrade()
         {
 

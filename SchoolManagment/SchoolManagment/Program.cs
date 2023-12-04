@@ -8,6 +8,13 @@ namespace SchoolManagment
     {
         static void Main(string[] args)
         {
+
+            Connect connect = new Connect(new SqlConnection());
+            connect.DBConnect();
+         
+
+
+
             //Actions.GetStudents();
 
 
@@ -22,10 +29,7 @@ namespace SchoolManagment
                 Console.WriteLine($"\t\t =====================================================================================\n");
                 int choice = Convert.ToInt32(Console.ReadLine());
 
-
-
-               Connect connect = new Connect(new SqlConnection());
-                connect.DBConnect();
+            
 
                 switch (choice)
                 {
@@ -36,21 +40,24 @@ namespace SchoolManagment
 
                         // Insert the Student  into the database
                         Actions.AddStudent(connect._Conn);
-                        connect._Conn.Close();
+                        //connect._Conn.Close();
                         break;
 
                     case 2:
 
                         Actions.AddPersonel(connect._Conn);
-                        connect._Conn.Close();
+                        //connect._Conn.Close();
                      break;
 
                        
 
 
                     case 3:
-                        Actions.GetStudents(connect._Conn);
-                        connect._Conn.Close();
+                        //Actions.GetStudents(connect._Conn);
+                        //connect._Conn.Close();
+
+                        Actions.GetStudentsInClass(connect._Conn);
+                        //connect._Conn.Close();  
 
                         break;
 
@@ -58,8 +65,8 @@ namespace SchoolManagment
 
 
 
-                     
-                        break;
+                  
+                    break;
 
                     default:
 

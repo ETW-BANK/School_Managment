@@ -72,6 +72,8 @@ namespace SchoolManagment.Action
                 int age = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter Class Name");
                 string clasname = Console.ReadLine().ToUpper();
+                Console.WriteLine("Enter Grade");
+                int grade=Convert.ToInt32(Console.ReadLine());
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
@@ -92,19 +94,31 @@ namespace SchoolManagment.Action
 
                 int courseId = Convert.ToInt32(cmd.ExecuteScalar());
 
+                cmd.CommandText = "INSERT INTO Relation(Grade,GradeDate) OUTPUT INSERTED.Course_ID VALUES (@grade,@gradedate)";
+                cmd.Parameters.Clear(); // Clear previous parameters
+                cmd.Parameters.AddWithValue("@coursetitle", course);
+
+                //int courseId = Convert.ToInt32(cmd.ExecuteScalar());
+
+
+
                 // Insert into Class table and get the generated Class_ID
                 cmd.CommandText = "INSERT INTO Class(ClassName) OUTPUT INSERTED.Class_ID VALUES (@classname)";
                 cmd.Parameters.Clear(); // Clear previous parameters
                 cmd.Parameters.AddWithValue("@classname", clasname);
 
                 int classId = Convert.ToInt32(cmd.ExecuteScalar());
+                DateTime gradedate=DateTime.Now;
 
                 // Insert into Relation table using the generated IDs
-                cmd.CommandText = "INSERT INTO Relation(StudentID, CourseID, ClassID) VALUES (@studentId, @courseId, @classId)";
+                cmd.CommandText = "INSERT INTO Relation(StudentID, CourseID, ClassID,Grade,GradeDate) VALUES (@studentId, @courseId, @classId,@grade,@gradedate)";
                 cmd.Parameters.Clear(); // Clear previous parameters
                 cmd.Parameters.AddWithValue("@studentId", studentId);
                 cmd.Parameters.AddWithValue("@courseId", courseId);
                 cmd.Parameters.AddWithValue("@classId", classId);
+                cmd.Parameters.AddWithValue("@grade", grade);
+                cmd.Parameters.AddWithValue("@gradedate", gradedate);
+
 
                 int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -245,7 +259,7 @@ namespace SchoolManagment.Action
             }
 
         }
-        public static void GetGrade()
+        public static void GetAvrageGrade()
         {
 
         }

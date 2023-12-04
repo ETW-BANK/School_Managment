@@ -213,8 +213,36 @@ namespace SchoolManagment.Action
             }
 
         }
-        public static void GetPersonel()
+        public static void GetPersonel(SqlConnection conn)
         {
+            using (SqlCommand cmd=new SqlCommand())
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection= conn;
+                cmd.CommandText = "select * from Personel WHERE CourseName IS NOT NULL ";
+
+                SqlDataReader reader=cmd.ExecuteReader();   
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "Personel ID", "First Name", "Last Name", "Department", "Course Name");
+                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "==========", "============", "========", "==========", "===========");
+
+
+                    while (reader.Read())
+                    {
+                        Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+
+                    }
+                }
+                else
+
+                {
+                    Console.WriteLine("No rows");
+                }
+              
+                reader.Close();
+            }
 
         }
         public static void GetGrade()

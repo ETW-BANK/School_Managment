@@ -40,24 +40,26 @@ namespace SchoolManagment
 
                         // Insert the Student  into the database
                         Actions.AddStudent(connect._Conn);
-                        //connect._Conn.Close();
+                       
                         break;
 
                     case 2:
 
                         Actions.AddPersonel(connect._Conn);
-                        //connect._Conn.Close();
+                        
                      break;
 
                        
 
 
                     case 3:
-                        //Actions.GetStudents(connect._Conn);
-                        //connect._Conn.Close();
+                        ////Actions.GetStudents(connect._Conn);
 
-                        Actions.GetStudentsInClass(connect._Conn);
-                        //connect._Conn.Close();  
+
+                        //Actions.GetStudentsInClass(connect._Conn);
+
+                        Actions.GetPersonel(connect._Conn);
+                       
 
                         break;
 

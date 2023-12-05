@@ -4,6 +4,7 @@ using SchoolManagment.DBconn;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
@@ -33,14 +34,15 @@ namespace SchoolManagment.Action
 
                 if (reader.HasRows)
                 {
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "Student ID",  "First Name",   "Last Name",   "Gender",    "Age");
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "==========", "============", "===========","==========", "====");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "Student ID", "First Name", "Last Name", "Gender", "Age");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==========", "==========","=========", "======", "===");
+
 
 
                     while (reader.Read())
                     {
-                        
-                        Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
+
+                        Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
                     }
                 }
                 else
@@ -135,8 +137,6 @@ namespace SchoolManagment.Action
                 Console.Clear();
             }
         }
-
-
 
         public static void AddPersonel(SqlConnection conn)
         {
@@ -264,7 +264,100 @@ namespace SchoolManagment.Action
 
         }
 
+        public static void GetLatestGrades(SqlConnection conn)
+        {
+            using (SqlCommand cmd = new SqlCommand())
+            {
+
+
+
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+
+
+
+                cmd.CommandText = "SELECT Student.FirstName, Student.LastName, Course.CourseTitel, Relation.Grade, Relation.GradeDate " +
+                                "FROM " +
+                                "Student " +
+                                "JOIN Relation ON Student.Student_ID = Relation.StudentID " +
+                                "JOIN Course ON Relation.CourseID = Course.Course_ID " +
+                                "WHERE Relation.Grade IS NOT NULL " +
+                                "AND Relation.GradeDate IS NOT NULL " +
+                                "AND MONTH(Relation.GradeDate) = MONTH(GETDATE()) " +
+                                "AND YEAR(Relation.GradeDate) = YEAR(GETDATE());";
+
+
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "First Name", "Last Name", "Course Title", "Grade", "Grade Date");
+                Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==============", "==============", "==============", "==============", "==============");
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}",
+                        reader.GetString(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.GetInt32(3),
+                        reader.GetDateTime(4).ToShortDateString());
+
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("NoRows");
+                }
+
+                reader.Close();
+            }
+
+        }
+
+        //public static void GetAll(SqlConnection conn)
+        //{
+        //    using (SqlCommand cmd = new SqlCommand())
+        //    {
+        //        cmd.CommandType = CommandType.Text;
+        //        cmd.Connection = conn;
+
+        //        cmd.CommandText = "SELECT Student.FirstName, Course.CourseTitel, Class.ClassName, Relation.Grade, Relation.GradeDate " +
+        //                          "FROM " +
+        //                          "Student " +
+        //                          "JOIN Relation ON Student.Student_ID = Relation.StudentID " +
+        //                          "JOIN Course ON Relation.CourseID = Course.Course_ID " +
+        //                          "JOIN Class ON Relation.ClassID = Class.Class_ID " +
+        //                          "WHERE Relation.Grade IS NOT NULL AND Relation.GradeDate IS NOT NULL;";
+
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}",
+        //                                  reader.GetString(0), reader.GetString(1), reader.GetString(2),
+        //                                  reader.GetInt32(3), reader.GetDateTime(4).ToShortDateString());
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("NoRows");
+        //        }
+
+        //        reader.Close();
+        //    }
+        //}
+
+
+
+
+
+
 
     }
-    }
+}
     

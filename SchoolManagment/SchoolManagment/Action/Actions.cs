@@ -210,10 +210,12 @@ namespace SchoolManagment.Action
 
                 if (reader.HasRows)
                 {
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "Student ID", "First Name", "Last Name", "Gender", "Age");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==========", "==========", "=========", "======", "===");
                     while (reader.Read())
                     {
 
-                        Console.WriteLine($"Student ID: {reader["Student_ID"]}, Name: {reader["FirstName"]} {reader["LastName"]}, Gender: {reader["Gender"]}, Age: {reader["Age"]}");
+                        Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
                     }
 
 
@@ -354,6 +356,24 @@ namespace SchoolManagment.Action
         //        reader.Close();
         //    }
         //}
+
+        public static void EscapeKeyCall()
+        {
+            Console.WriteLine("\n\n");
+            Console.WriteLine("\t\t\t\u001b[0m Press \u001b[34m ESC \u001b[0m to exit");
+
+            ConsoleKey key;
+            do
+            {
+                key = Console.ReadKey().Key;
+
+                if (key != ConsoleKey.Escape)
+                {
+                    Console.WriteLine("\n\t\t\t\u001b[31m Wrong key pressed. Press \u001b[34m ESC\u001b[0m \u001b[31m to exit.\t\t\t\u001b[0m");
+                }
+            } while (key != ConsoleKey.Escape);
+        }
+
 
 
 

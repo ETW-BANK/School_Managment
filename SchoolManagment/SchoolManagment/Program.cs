@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SchoolManagment.Action;
 using SchoolManagment.DBconn;
+using System;
 
 namespace SchoolManagment
 {
@@ -12,15 +13,6 @@ namespace SchoolManagment
             Connect connect = new Connect(new SqlConnection());
             connect.DBConnect();
          
-
-
-
-            //Actions.GetStudents();
-
-
-            Console.WriteLine($"\t\t\t\t\t WELCOME TO CHAS ACADEMY");
-            Console.WriteLine($"\t\t\t\t\t=========================\n");
-
 
             do
             {
@@ -37,45 +29,47 @@ namespace SchoolManagment
 
                     case 1:
 
-
-                        // Insert the Student  into the database
-                        Actions.AddStudent(connect._Conn);
-                       
-                        break;
+                    Actions.AddStudent(connect._Conn);
+     
+                    break;
 
                     case 2:
 
-                        Actions.AddPersonel(connect._Conn);
-                        
-                     break;
-
-                       
-
-
-                    case 3:
-                        //Actions.GetStudents(connect._Conn);
-
-
-                        //Actions.GetStudentsInClass(connect._Conn);
-
-                        //Actions.GetPersonel(connect._Conn);
-                        Actions.GetLatestGrades(connect._Conn);
-
-
-                        break;
-
-                    case 'u':
-
-
-
-                  
+                    Actions.AddPersonel(connect._Conn);
+                   
                     break;
 
-                    default:
+                       
+                    case 3:
+                        
+                    Actions.GetLatestGrades(connect._Conn);
+               
+                   break;
 
-                        Console.WriteLine("Wrong Choice");
+                   case 4:
 
-                        break;
+                   Actions.GetPersonel(connect._Conn);
+                
+                   break;
+
+                   case 5:
+
+                   Actions.GetStudents(connect._Conn);
+                
+                   break;
+
+                   case 6:
+
+                   Actions.GetStudentsInClass(connect._Conn);
+                  
+
+                  break;
+
+                  default:
+
+                  Console.WriteLine("Wrong Choice");
+
+                  break;
                 }
 
 

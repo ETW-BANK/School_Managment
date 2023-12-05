@@ -30,10 +30,10 @@ namespace SchoolManagment
                     case 1:
                       
 
-                        Actions.AddStudent(connect._Conn);
+                     Actions.AddStudent(connect._Conn);
                        
 
-                        break;
+                    break;
 
                     case 2:
 
@@ -67,14 +67,14 @@ namespace SchoolManagment
 
                   break;
 
-                    case 7:
+                  case 7:
 
                    Actions.GetAvrageGrade(connect._Conn);
 
 
-                    break;
+                  break;
 
-                    default:
+                  default:
 
                   Console.WriteLine("Wrong Choice");
 

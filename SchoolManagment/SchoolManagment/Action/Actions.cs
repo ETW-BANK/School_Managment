@@ -133,8 +133,7 @@ namespace SchoolManagment.Action
                     Console.WriteLine("\t\t\tFailed to insert data into the Students table.");
                 }
 
-                Thread.Sleep(1000);
-                Console.Clear();
+                
             }
         }
 
@@ -261,10 +260,55 @@ namespace SchoolManagment.Action
             }
 
         }
-        public static void GetAvrageGrade(SqlConnection conn)
+        //public static void GetAvrageGrade(SqlConnection conn)
+        //{
+        //    Console.WriteLine("Enter Course Name");
+        //    string courseName = Console.ReadLine().ToUpper();
+
+        //    using (SqlCommand cmd = new SqlCommand())
+        //    {
+        //        cmd.CommandType = CommandType.Text;
+        //        cmd.Connection = conn;
+
+        //        // Retrieve the Course_ID based on the provided course name
+        //        cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseName";
+        //        cmd.Parameters.AddWithValue("@courseName", courseName);
+
+        //        int courseId = Convert.ToInt32(cmd.ExecuteScalar());
+
+        //        // Check if the course exists
+        //        if (courseId > 0)
+        //        {
+        //            // Retrieve the average grade for the specific course
+        //            cmd.CommandText = "SELECT AVG(Grade) AS AverageGrade FROM Relation " +
+        //           "INNER JOIN Course ON Relation.CourseID = Course.Course_ID " +
+        //           "WHERE Course.CourseTitel = @courseTitel";
+        //            cmd.Parameters.Clear(); // Clear previous parameters
+        //            cmd.Parameters.AddWithValue("@courseTitel", courseTitel);
+
+        //            object averageGrade = cmd.ExecuteScalar();
+
+        //            if (averageGrade != null && averageGrade != DBNull.Value)
+        //            {
+        //                double avgGrade = Convert.ToDouble(averageGrade);
+        //                Console.WriteLine($"Average Grade for Course ID {courseId}: {avgGrade}");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("No grades found for the specified course.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine($"Course '{courseName}'Course Not found.");
+        //        }
+        //    }
+        //}
+
+        public static void GetAverageGrade(SqlConnection conn)
         {
-            Console.WriteLine("Enter Course Name");
-            string courseName = Console.ReadLine().ToUpper();
+            Console.WriteLine("Enter Course Title");
+            string coursetitle = Console.ReadLine().ToUpper();
 
             using (SqlCommand cmd = new SqlCommand())
             {
@@ -272,8 +316,8 @@ namespace SchoolManagment.Action
                 cmd.Connection = conn;
 
                 // Retrieve the Course_ID based on the provided course name
-                cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseName";
-                cmd.Parameters.AddWithValue("@courseName", courseName);
+                cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseTitle";
+                cmd.Parameters.AddWithValue("@courseTitle", coursetitle);
 
                 int courseId = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -281,27 +325,30 @@ namespace SchoolManagment.Action
                 if (courseId > 0)
                 {
                     // Retrieve the average grade for the specific course
-                    cmd.CommandText = "SELECT AVG(Grade) FROM Relation WHERE CourseID = @courseId";
+                    cmd.CommandText = "SELECT AVG(Grade) AS AverageGrade FROM Relation " +
+                                      "WHERE CourseID = @courseId";
                     cmd.Parameters.Clear(); // Clear previous parameters
                     cmd.Parameters.AddWithValue("@courseId", courseId);
 
                     object averageGrade = cmd.ExecuteScalar();
 
-                    if (averageGrade != DBNull.Value)
+                    if (averageGrade != null && averageGrade != DBNull.Value)
                     {
-                        Console.WriteLine($"Average Grade for Course '{courseName}': {averageGrade}");
+                        double avgGrade = Convert.ToDouble(averageGrade);
+                        Console.WriteLine($"Average Grade for Course '{coursetitle}': {avgGrade}");
                     }
                     else
                     {
-                        Console.WriteLine($"No grades found for Course '{courseName}'.");
+                        Console.WriteLine($"No grades found for the specified course: '{coursetitle}'");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"Course '{courseName}' not found.");
+                    Console.WriteLine($"Course '{coursetitle}' not found.");
                 }
             }
         }
+
 
         public static void GetLatestGrades(SqlConnection conn)
         {
@@ -360,39 +407,7 @@ namespace SchoolManagment.Action
 
         }
 
-        //public static void GetAll(SqlConnection conn)
-        //{
-        //    using (SqlCommand cmd = new SqlCommand())
-        //    {
-        //        cmd.CommandType = CommandType.Text;
-        //        cmd.Connection = conn;
-
-        //        cmd.CommandText = "SELECT Student.FirstName, Course.CourseTitel, Class.ClassName, Relation.Grade, Relation.GradeDate " +
-        //                          "FROM " +
-        //                          "Student " +
-        //                          "JOIN Relation ON Student.Student_ID = Relation.StudentID " +
-        //                          "JOIN Course ON Relation.CourseID = Course.Course_ID " +
-        //                          "JOIN Class ON Relation.ClassID = Class.Class_ID " +
-        //                          "WHERE Relation.Grade IS NOT NULL AND Relation.GradeDate IS NOT NULL;";
-
-        //        SqlDataReader reader = cmd.ExecuteReader();
-        //        if (reader.HasRows)
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}",
-        //                                  reader.GetString(0), reader.GetString(1), reader.GetString(2),
-        //                                  reader.GetInt32(3), reader.GetDateTime(4).ToShortDateString());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("NoRows");
-        //        }
-
-        //        reader.Close();
-        //    }
-        //}
+       
 
         public static void EscapeKeyCall()
         {

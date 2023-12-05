@@ -260,50 +260,7 @@ namespace SchoolManagment.Action
             }
 
         }
-        //public static void GetAvrageGrade(SqlConnection conn)
-        //{
-        //    Console.WriteLine("Enter Course Name");
-        //    string courseName = Console.ReadLine().ToUpper();
-
-        //    using (SqlCommand cmd = new SqlCommand())
-        //    {
-        //        cmd.CommandType = CommandType.Text;
-        //        cmd.Connection = conn;
-
-        //        // Retrieve the Course_ID based on the provided course name
-        //        cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseName";
-        //        cmd.Parameters.AddWithValue("@courseName", courseName);
-
-        //        int courseId = Convert.ToInt32(cmd.ExecuteScalar());
-
-        //        // Check if the course exists
-        //        if (courseId > 0)
-        //        {
-        //            // Retrieve the average grade for the specific course
-        //            cmd.CommandText = "SELECT AVG(Grade) AS AverageGrade FROM Relation " +
-        //           "INNER JOIN Course ON Relation.CourseID = Course.Course_ID " +
-        //           "WHERE Course.CourseTitel = @courseTitel";
-        //            cmd.Parameters.Clear(); // Clear previous parameters
-        //            cmd.Parameters.AddWithValue("@courseTitel", courseTitel);
-
-        //            object averageGrade = cmd.ExecuteScalar();
-
-        //            if (averageGrade != null && averageGrade != DBNull.Value)
-        //            {
-        //                double avgGrade = Convert.ToDouble(averageGrade);
-        //                Console.WriteLine($"Average Grade for Course ID {courseId}: {avgGrade}");
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("No grades found for the specified course.");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine($"Course '{courseName}'Course Not found.");
-        //        }
-        //    }
-        //}
+        
 
         public static void GetAverageGrade(SqlConnection conn)
         {
@@ -315,19 +272,18 @@ namespace SchoolManagment.Action
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
 
-                // Retrieve the Course_ID based on the provided course name
                 cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseTitle";
                 cmd.Parameters.AddWithValue("@courseTitle", coursetitle);
 
                 int courseId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                // Check if the course exists
+                
                 if (courseId > 0)
                 {
-                    // Retrieve the average grade for the specific course
+                    
                     cmd.CommandText = "SELECT AVG(Grade) AS AverageGrade FROM Relation " +
                                       "WHERE CourseID = @courseId";
-                    cmd.Parameters.Clear(); // Clear previous parameters
+                    cmd.Parameters.Clear(); 
                     cmd.Parameters.AddWithValue("@courseId", courseId);
 
                     object averageGrade = cmd.ExecuteScalar();

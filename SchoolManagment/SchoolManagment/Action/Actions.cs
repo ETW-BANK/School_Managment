@@ -239,14 +239,14 @@ namespace SchoolManagment.Action
 
                 if (reader.HasRows)
                 {
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "Personel ID", "First Name", "Last Name", "Department", "Course Name");
-                    Console.WriteLine("\t\t\t{0}\t{1}\t{2}\t{3}\t\t{4}", "==========", "============", "========", "==========", "===========");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "Personel ID", "First Name", "Last Name", "Department", "Course Name");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==============", "==============", "==============", "==============", "==============");
+
 
 
                     while (reader.Read())
                     {
-                        Console.WriteLine("\t\t\t{0}\t\t{1}\t\t{2}\t\t{3}\t\t{4}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
-
+                        Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
                     }
                 }
                 else

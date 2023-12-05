@@ -53,12 +53,12 @@ namespace SchoolManagment
 
 
                     case 3:
-                        Actions.GetStudents(connect._Conn);
+                        //Actions.GetStudents(connect._Conn);
 
 
                         //Actions.GetStudentsInClass(connect._Conn);
 
-                        //Actions.GetPersonel(connect._Conn);
+                        Actions.GetPersonel(connect._Conn);
                         //Actions.GetLatestGrades(connect._Conn);
 
 

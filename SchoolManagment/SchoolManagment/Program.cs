@@ -58,8 +58,8 @@ namespace SchoolManagment
 
                         //Actions.GetStudentsInClass(connect._Conn);
 
-                        Actions.GetPersonel(connect._Conn);
-                        //Actions.GetLatestGrades(connect._Conn);
+                        //Actions.GetPersonel(connect._Conn);
+                        Actions.GetLatestGrades(connect._Conn);
 
 
                         break;

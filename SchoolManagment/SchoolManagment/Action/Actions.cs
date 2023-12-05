@@ -290,11 +290,14 @@ namespace SchoolManagment.Action
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "First Name", "Last Name", "Course Title", "Grade", "Grade Date");
-                Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==============", "==============", "==============", "==============", "==============");
 
                 if (reader.HasRows)
                 {
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "First Name", "Last Name", "Course Title", "Grade", "Grade Date");
+                    Console.WriteLine("\t{0,-15}\t{1,-15}\t{2,-15}\t{3,-15}\t{4,-15}", "==========", "=========", "=============", "=====","==========");
+
+
+
                     while (reader.Read())
                     {
 

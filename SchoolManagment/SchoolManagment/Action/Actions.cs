@@ -52,9 +52,7 @@ namespace SchoolManagment.Action
                 reader.Close();
             }
         }
-     
-
-
+   
         public static void AddStudent(SqlConnection conn)
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -136,7 +134,6 @@ namespace SchoolManagment.Action
                 
             }
         }
-
         public static void AddPersonel(SqlConnection conn)
         {
 
@@ -260,8 +257,7 @@ namespace SchoolManagment.Action
             }
 
         }
-        
-
+      
         public static void GetAverageGrade(SqlConnection conn)
         {
             Console.WriteLine("Enter Course Title");
@@ -304,8 +300,6 @@ namespace SchoolManagment.Action
                 }
             }
         }
-
-
         public static void GetLatestGrades(SqlConnection conn)
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -362,9 +356,6 @@ namespace SchoolManagment.Action
             }
 
         }
-
-       
-
         public static void EscapeKeyCall()
         {
             Console.WriteLine("\n\n");

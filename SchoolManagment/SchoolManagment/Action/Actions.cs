@@ -57,7 +57,7 @@ namespace SchoolManagment.Action
         {
             using (SqlCommand cmd = new SqlCommand())
             {
-                // Insert data into the Students table
+               
                 Console.WriteLine("\n\t\t\tInserting data into the Students table.");
                 Console.WriteLine("\t\t\t=========================================\n\n");
                 Console.WriteLine("Enter First Name");
@@ -66,19 +66,19 @@ namespace SchoolManagment.Action
                 string Lname = Console.ReadLine().ToUpper();
                 Console.WriteLine("Enter Student Gender");
                 string gender = Console.ReadLine().ToUpper();
-                Console.WriteLine("Enter Course Name");
-                string course = Console.ReadLine().ToUpper();
                 Console.WriteLine("Enter Age");
                 int age = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter Class Name");
                 string clasname = Console.ReadLine().ToUpper();
+                Console.WriteLine("Enter Course Title");
+                string course = Console.ReadLine().ToUpper();
                 Console.WriteLine("Enter Grade");
                 int grade=Convert.ToInt32(Console.ReadLine());
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
 
-                // Insert into Student table and get the generated Student_ID
+              
                 cmd.CommandText = "INSERT INTO Student(FirstName, LastName, Gender, Age) OUTPUT INSERTED.Student_ID VALUES (@Fname, @Lname, @gender, @age)";
                 cmd.Parameters.AddWithValue("@Fname", Fname);
                 cmd.Parameters.AddWithValue("@Lname", Lname);
@@ -124,11 +124,11 @@ namespace SchoolManagment.Action
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("\t\t\tData inserted into the Students table.\n");
+                    Console.WriteLine("\t\t\t \u001b[32m Data inserted into the Students table.\u001b[0m\n");
                 }
                 else
                 {
-                    Console.WriteLine("\t\t\tFailed to insert data into the Students table.");
+                    Console.WriteLine("\t\t\t\u001b[31mFailed to insert data into the Students table.\u001b[0m");
                 }
 
                 
@@ -173,11 +173,11 @@ namespace SchoolManagment.Action
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("\t\t\tData inserted into the Personel table.\n");
+                    Console.WriteLine("\t\t\t\u001b[32mData inserted into the Personel table.\u001b[0m\n");
                 }
                 else
                 {
-                    Console.WriteLine("\t\t\tFailed to insert data into the Personel table.");
+                    Console.WriteLine("\t\t\t\u001b[31m Failed to insert data into the Personel table.\u001b[0m");
                 }
 
             }
@@ -265,7 +265,7 @@ namespace SchoolManagment.Action
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
 
-                // Retrieve the average grade for the specific course
+                
                 cmd.CommandText = "SELECT AVG(Relation.Grade) AS AverageGrade " +
                                   "FROM Relation " +
                                   "INNER JOIN Course ON Relation.CourseID = Course.Course_ID " +
@@ -275,12 +275,23 @@ namespace SchoolManagment.Action
 
                 object averageGrade = cmd.ExecuteScalar();
 
-                if (averageGrade != null && averageGrade != DBNull.Value)
+
+
+
+                if (averageGrade != null && averageGrade != DBNull.Value && courseTitle !=null )
                 {
-                    return Convert.ToDouble(averageGrade);
+                 
+                    
+                    return Math.Round(Convert.ToDouble(averageGrade),1);
+                }
+                else
+                {
+                    Console.WriteLine("\u001b[31m Course Titel NOT FOUND \u001b[0m");
                 }
 
-                // Return a default value if no data is found or the course doesn't exist
+               
+
+                
                 return 0.0;
             }
         }

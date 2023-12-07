@@ -12,11 +12,14 @@ namespace SchoolManagment
 
             Connect connect = new Connect(new SqlConnection());
             connect.DBConnect();
-         
+           
 
             do
             {
                 Console.WriteLine("\n\n");
+
+                Console.WriteLine($"\t\t ============================================================\n");
+
                 Console.WriteLine($"\t\t Press {"1"} to add a student");
                 Console.WriteLine($"\t\t Press {"2"} to add personnel");
                 Console.WriteLine($"\t\t Press {"3"} to view the latest grades");
@@ -24,7 +27,7 @@ namespace SchoolManagment
                 Console.WriteLine($"\t\t Press {"5"} to view the list of all students");
                 Console.WriteLine($"\t\t Press {"6"} to view students in a specific class");
                 Console.WriteLine($"\t\t Press {"7"} to view the average grade for a specific course");
-                Console.WriteLine($"\t\t Press {"0"} to exit");
+                Console.WriteLine($"\t\t Press {"0"} to exit\n");
 
                 Console.WriteLine($"\t\t ============================================================\n");
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -88,9 +91,9 @@ namespace SchoolManagment
 
                   Console.WriteLine("Enter Course Title");
                   string coursetitle = Console.ReadLine().ToUpper();
-                  Console.WriteLine($"The Avrage Grade for {coursetitle} is : {Actions.GetAverageGrade(connect._Conn, coursetitle)}");
 
-                        
+                 Console.WriteLine($"The Avrage Grade for {coursetitle} is : {Actions.GetAverageGrade(connect._Conn, coursetitle)}");
+
                   Actions.EscapeKeyCall();
                   Console.Clear();
 

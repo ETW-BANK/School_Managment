@@ -86,7 +86,11 @@ namespace SchoolManagment
 
                   case 7:
 
-                  Actions.GetAverageGrade(connect._Conn);
+                  Console.WriteLine("Enter Course Title");
+                  string coursetitle = Console.ReadLine().ToUpper();
+                  Console.WriteLine($"The Avrage Grade for {coursetitle} is : {Actions.GetAverageGrade(connect._Conn, coursetitle)}");
+
+                        
                   Actions.EscapeKeyCall();
                   Console.Clear();
 

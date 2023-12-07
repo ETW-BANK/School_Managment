@@ -257,49 +257,34 @@ namespace SchoolManagment.Action
             }
 
         }
-      
-        public static void GetAverageGrade(SqlConnection conn)
-        {
-            Console.WriteLine("Enter Course Title");
-            string coursetitle = Console.ReadLine().ToUpper();
 
+        public static double GetAverageGrade(SqlConnection conn, string courseTitle)
+        {
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
 
-                cmd.CommandText = "SELECT Course_ID FROM Course WHERE CourseTitel = @courseTitle";
-                cmd.Parameters.AddWithValue("@courseTitle", coursetitle);
+                // Retrieve the average grade for the specific course
+                cmd.CommandText = "SELECT AVG(Relation.Grade) AS AverageGrade " +
+                                  "FROM Relation " +
+                                  "INNER JOIN Course ON Relation.CourseID = Course.Course_ID " +
+                                  "WHERE Course.CourseTitel = @courseTitle";
 
-                int courseId = Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.Parameters.AddWithValue("@courseTitle", courseTitle);
 
-                
-                if (courseId > 0)
+                object averageGrade = cmd.ExecuteScalar();
+
+                if (averageGrade != null && averageGrade != DBNull.Value)
                 {
-                    
-                    cmd.CommandText = "SELECT AVG(Grade) AS AverageGrade FROM Relation " +
-                                      "WHERE CourseID = @courseId";
-                    cmd.Parameters.Clear(); 
-                    cmd.Parameters.AddWithValue("@courseId", courseId);
-
-                    object averageGrade = cmd.ExecuteScalar();
-
-                    if (averageGrade != null && averageGrade != DBNull.Value)
-                    {
-                        double avgGrade = Convert.ToDouble(averageGrade);
-                        Console.WriteLine($"Average Grade for Course '{coursetitle}': {avgGrade}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"No grades found for the specified course: '{coursetitle}'");
-                    }
+                    return Convert.ToDouble(averageGrade);
                 }
-                else
-                {
-                    Console.WriteLine($"Course '{coursetitle}' not found.");
-                }
+
+                // Return a default value if no data is found or the course doesn't exist
+                return 0.0;
             }
         }
+
         public static void GetLatestGrades(SqlConnection conn)
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -372,6 +357,10 @@ namespace SchoolManagment.Action
                 }
             } while (key != ConsoleKey.Escape);
         }
+
+
+
+
 
 
 

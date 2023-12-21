@@ -28,6 +28,23 @@ namespace SchoolManagment.Action
 
                 cmd.CommandText = "select * from Student";
                 cmd.CommandType = CommandType.Text;
+
+                  Console.WriteLine($"Press A for Ascending or D for Descending");
+                  string choice = Console.ReadLine().ToUpper();
+
+          if (choice == "A")
+      {
+      cmd.CommandText += " ORDER BY FirstName ASC";
+      }
+      else if (choice == "D")
+      {
+      cmd.CommandText += " ORDER BY FirstName DESC";
+      }
+      else
+      {
+      Console.WriteLine("Invalid choice. Defaulting to ascending order.");
+      cmd.CommandText += " ORDER BY FirstName ASC";
+      }
                 cmd.Connection = conn;
 
                 SqlDataReader reader = cmd.ExecuteReader();

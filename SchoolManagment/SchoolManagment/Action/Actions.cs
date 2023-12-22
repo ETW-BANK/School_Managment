@@ -29,7 +29,7 @@ namespace SchoolManagment.Action
                 cmd.CommandText = "select * from Student";
                 cmd.CommandType = CommandType.Text;
 
-                  Console.WriteLine($"Press A for Ascending or D for Descending");
+                  Console.WriteLine($"\n\t\t\t\u001b[34mPress A for Ascending or D for Descending\n\t\t\t\u001b[0m");
                   string choice = Console.ReadLine().ToUpper();
 
           if (choice == "A")
@@ -42,8 +42,10 @@ namespace SchoolManagment.Action
       }
       else
       {
-      Console.WriteLine("Invalid choice. Defaulting to ascending order.");
-      cmd.CommandText += " ORDER BY FirstName ASC";
+     
+      Console.WriteLine("\n\t\t\t\u001b[33mInvalid choice. Defaulting to ascending order.\n\t\t\t\u001b[0m");
+                    Thread.Sleep(2000);
+                    cmd.CommandText += " ORDER BY FirstName ASC";
       }
                 cmd.Connection = conn;
 

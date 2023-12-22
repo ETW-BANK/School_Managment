@@ -30,12 +30,13 @@ namespace SchoolManagment
                 Console.WriteLine($"\t\t Press {"0"} to exit\n");
 
                 Console.WriteLine($"\t\t ============================================================\n");
+
                 int choice = Convert.ToInt32(Console.ReadLine());
 
-            
 
                 switch (choice)
                 {
+                    
                     case 0:
 
                      Environment.Exit(0);
@@ -101,8 +102,9 @@ namespace SchoolManagment
 
                   default:
 
-                  Console.WriteLine("Wrong Choice");
-
+                        Console.WriteLine("\n\t\t\t\u001b[31m Wrong Choice. Please try agin\t\t\t\u001b[0m");
+                        Thread.Sleep(2000);
+                        Console.Clear();
                   break;
                 }
 
